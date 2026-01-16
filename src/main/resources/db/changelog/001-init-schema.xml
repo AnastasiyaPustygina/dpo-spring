@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.31.xsd">
+
+    <changeSet id="1" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="categories"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="categories">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="teachers"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="teachers">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="polytech_profile_url" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="courses"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="courses">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_description" type="TEXT"/>
+            <column name="full_description" type="TEXT"/>
+            <column name="duration_hours" type="INTEGER"/>
+            <column name="start_date" type="DATE"/>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="courses"
+                baseColumnNames="category_id"
+                referencedTableName="categories"
+                referencedColumnNames="id"
+                constraintName="fk_course_category"/>
+    </changeSet>
+
+    <changeSet id="4" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="course_teacher"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="course_teacher">
+            <column name="course_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)"/>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="course_teacher"
+                columnNames="course_id, teacher_id"
+                constraintName="pk_course_teacher"/>
+
+        <addForeignKeyConstraint
+                baseTableName="course_teacher"
+                baseColumnNames="course_id"
+                referencedTableName="courses"
+                referencedColumnNames="id"
+                constraintName="fk_ct_course"/>
+
+        <addForeignKeyConstraint
+                baseTableName="course_teacher"
+                baseColumnNames="teacher_id"
+                referencedTableName="teachers"
+                referencedColumnNames="id"
+                constraintName="fk_ct_teacher"/>
+    </changeSet>
+
+    <changeSet id="5" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="course_tags"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="course_tags">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="frequency" type="INTEGER"/>
+            <column name="created_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="course_tag_relation"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="course_tag_relation">
+            <column name="course_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="DOUBLE PRECISION"/>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="course_tag_relation"
+                columnNames="course_id, tag_id"
+                constraintName="pk_course_tag_relation"/>
+
+        <addForeignKeyConstraint
+                baseTableName="course_tag_relation"
+                baseColumnNames="course_id"
+                referencedTableName="courses"
+                referencedColumnNames="id"
+                constraintName="fk_ctr_course"/>
+
+        <addForeignKeyConstraint
+                baseTableName="course_tag_relation"
+                baseColumnNames="tag_id"
+                referencedTableName="course_tags"
+                referencedColumnNames="id"
+                constraintName="fk_ctr_tag"/>
+    </changeSet>
+
+    <changeSet id="7" author="pustygina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="text_analysis_results"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="text_analysis_results">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="course_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="total_words" type="INTEGER"/>
+            <column name="unique_words" type="INTEGER"/>
+            <column name="language" type="VARCHAR(10)"/>
+            <column name="analyzed_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="text_analysis_results"
+                baseColumnNames="course_id"
+                referencedTableName="courses"
+                referencedColumnNames="id"
+                constraintName="fk_text_analysis_course"/>
+    </changeSet>
+
+</databaseChangeLog>

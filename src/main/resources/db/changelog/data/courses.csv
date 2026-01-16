@@ -1,0 +1,4 @@
+id;title;short_description;full_description;duration_hours;start_date;category_id
+1;Java Spring Boot;Разработка backend-приложений;Полный курс по Spring Boot, JPA и REST API;72;2025-02-01;1
+2;Основы Data Science;Введение в анализ данных;Python, Pandas, NumPy, визуализация;64;2025-03-01;2
+3;Основы кибербезопасности;ИБ для начинающих;Криптография, угрозы, защита данных;48;2025-04-01;3

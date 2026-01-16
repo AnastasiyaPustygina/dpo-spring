@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.31.xsd">
+
+    <changeSet id="002-1-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/categories.csv"
+                separator=";"
+                tableName="categories"
+                encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="002-2-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/teachers.csv"
+                separator=";"
+                tableName="teachers"
+                encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="002-3-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/courses.csv"
+                separator=";"
+                tableName="courses"
+                encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="002-4-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/course_teacher.csv"
+                separator=";"
+                tableName="course_teacher"
+                encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="002-5-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/course_tags.csv"
+                separator=";"
+                tableName="course_tags"
+                encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="002-6-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/course_tag_relation.csv"
+                separator=";"
+                tableName="course_tag_relation"
+                encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="002-7-csv" author="pustygina">
+        <loadData
+                file="db/changelog/data/text_analysis_results.csv"
+                separator=";"
+                tableName="text_analysis_results"
+                encoding="UTF-8"/>
+    </changeSet>
+
+</databaseChangeLog>

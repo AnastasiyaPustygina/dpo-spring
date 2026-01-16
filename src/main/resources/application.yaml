@@ -1,0 +1,43 @@
+spring:
+  mail:
+    host: smtp.yandex.ru
+    port: 587
+    default-encoding: UTF-8
+    from: pustygina.nastya@yandex.ru
+    username: pustygina.nastya@yandex.ru
+    password: ehmyycfyvswawryd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  datasource:
+    url: jdbc:postgresql://localhost:5434/dpo_spring
+    username: postgres
+    password: dpo_springPass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: development,test,production
+    enabled: true
+    default-schema: public
+  jackson:
+    serialization:
+          write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"

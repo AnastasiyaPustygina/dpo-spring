@@ -1,0 +1,55 @@
+@startuml
+class com.polytech.courses.dpo_spring.dto.CourseTagDto {
+- Long id
+- String name
+- Integer frequency
+}
+
+class com.polytech.courses.dpo_spring.dto.TeacherDto {
+- Long id
+- String firstName
+- String lastName
+- String polytechProfileUrl
+}
+
+class com.polytech.courses.dpo_spring.dto.CategoryDto {
+- long id
+- String name
+- String description
+}
+
+class com.polytech.courses.dpo_spring.dto.CourseDto {
+- Long id
+- String title
+- String shortDescription
+- String fullDescription
+- Integer durationHours
+- LocalDate startDate
+- CategoryDto category
+- Set<TeacherDto> teachers
+- Set<CourseTagDto> tags
+- TextAnalysisResultDto textAnalysis
+}
+
+class com.polytech.courses.dpo_spring.dto.TextAnalysisResultDto {
+- Integer totalWords
+- Integer uniqueWords
+- String language
+}
+
+class com.polytech.courses.dpo_spring.dto.CourseEnrollmentRequest {
+- String fullName
+- String email
+- String phone
+- String comment
+}
+
+class com.polytech.courses.dpo_spring.dto.CourseShortDto {
+- Long id
+- String title
+- String shortDescription
+- Integer durationHours
+- String categoryName
+}
+
+@enduml
