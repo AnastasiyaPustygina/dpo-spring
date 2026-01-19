@@ -40,4 +40,10 @@ public class CourseEnrollmentController {
         emailService.sendTestEmail("pustygina.nastya@ya.ru");
     }
 
+    @GetMapping("/admin-mail/{title}")
+    public void adminMail(@PathVariable String title,
+            @RequestBody CourseEnrollmentRequest request) {
+        emailService.sendEnrollmentEmailToAdmin(title, request);
+    }
+
 }

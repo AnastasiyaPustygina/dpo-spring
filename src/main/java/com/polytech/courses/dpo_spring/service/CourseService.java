@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +52,7 @@ public class CourseService {
     }
 
 
+    public List<Course> getByCourseTitle(String courseTitle) {
+        return repository.findByTitle(courseTitle);
+    }
 }
